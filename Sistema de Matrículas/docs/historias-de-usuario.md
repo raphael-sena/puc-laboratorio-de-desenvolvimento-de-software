@@ -72,3 +72,13 @@
 - O sistema de cobranças deve receber o número de créditos e disciplinas matriculadas.
 
 ---
+
+## História 7: Geração de Currículo
+**Como** secretária  
+**Eu quero** criar a grade curricular  
+**Para que** o corpo discente tenha acesso à gama de cursos ofertados pela universidade  
+
+### Critérios de Aceitação:
+- Cada curso deve ter um nome, número de créditos e as disciplinas que compõem o curso.
+
+---
