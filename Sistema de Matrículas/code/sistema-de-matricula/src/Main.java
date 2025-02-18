@@ -1,6 +1,10 @@
 import models.Aluno;
+import models.Matricula;
 import models.Secretaria;
 import models.Usuario;
+import models.enums.StatusMatricula;
+
+import java.time.LocalDate;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -25,5 +29,11 @@ public class Main {
         secretaria.setNome("ICEI");
         secretaria.setSenha("123456");
         System.out.println(secretaria);
+
+        Matricula matricula = new Matricula();
+        matricula.setDataMatricula(LocalDate.now());
+        matricula.setAluno(aluno);
+        matricula.setStatusMatricula(StatusMatricula.ATIVA);
+        System.out.println(matricula);
     }
 }
