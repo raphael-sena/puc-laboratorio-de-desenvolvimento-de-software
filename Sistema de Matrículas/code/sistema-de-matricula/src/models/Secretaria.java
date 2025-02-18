@@ -10,7 +10,7 @@ public class Secretaria extends Usuario {
         this.usuarios = usuarios;
     }
 
-    public Secretaria(Integer id, String nome, String senha, Set<Usuario> usuarios) {
+    public Secretaria(Long id, String nome, String senha, Set<Usuario> usuarios) {
         super(id, nome, senha);
         this.usuarios = usuarios;
     }

@@ -11,7 +11,7 @@
 //        this.disciplinas = disciplinas;
 //    }
 //
-//    public Professor(Integer id, String nome, String senha, Set<Disciplina> disciplinas) {
+//    public Professor(Long id, String nome, String senha, Set<Disciplina> disciplinas) {
 //        super(id, nome, senha);
 //        this.disciplinas = disciplinas;
 //    }

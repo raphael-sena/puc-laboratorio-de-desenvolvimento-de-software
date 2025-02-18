@@ -3,24 +3,24 @@ package models;
 import java.util.Objects;
 
 public class Usuario {
-    private Integer id;
+    private Long id;
     private String nome;
     private String senha;
 
     public Usuario() {
     }
 
-    public Usuario(Integer id, String nome, String senha) {
+    public Usuario(Long id, String nome, String senha) {
         this.id = id;
         this.nome = nome;
         this.senha = senha;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
