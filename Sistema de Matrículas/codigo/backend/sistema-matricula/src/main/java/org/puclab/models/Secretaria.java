@@ -1,35 +1,24 @@
 package org.puclab.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_secretaria")
+@MappedSuperclass
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
 public class Secretaria extends Usuario {
     private Set<Usuario> usuarios;
-
-    public Secretaria(Set<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
-
-    public Secretaria(Long id, String nome, String senha, Set<Usuario> usuarios) {
-        super(id, nome, senha);
-        this.usuarios = usuarios;
-    }
-
-    public Secretaria() {
-    }
-
-    public Set<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(Set<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
 
     // TODO
     public Set<Aluno> getAlunos() {

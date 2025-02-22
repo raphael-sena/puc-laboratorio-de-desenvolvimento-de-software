@@ -1,43 +1,30 @@
 package org.puclab.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_professor")
+@MappedSuperclass
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
 public class Professor extends Usuario {
 
     private Set<Disciplina> disciplinas;
-
-    public Professor(Set<Disciplina> disciplinas) {
-        this.disciplinas = disciplinas;
-    }
-
-    public Professor(Long id, String nome, String senha, Set<Disciplina> disciplinas) {
-        super(id, nome, senha);
-        this.disciplinas = disciplinas;
-    }
-
-    public Professor() {
-    }
-
-    public Set<Disciplina> getDisciplinas() {
-        return disciplinas;
-    }
-
-    public void setDisciplinas(Set<Disciplina> disciplinas) {
-        this.disciplinas = disciplinas;
-    }
-
-    @Override
-    public String toString() {
-        return "Professor{" +
-                "disciplinas=" + disciplinas +
-                '}';
-    }
 
     public Set<Aluno> obterAlunosDisciplina(Disciplina disciplina) {
         return new HashSet<>();
