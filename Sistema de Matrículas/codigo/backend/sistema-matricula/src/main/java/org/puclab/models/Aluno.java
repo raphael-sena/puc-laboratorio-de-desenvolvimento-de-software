@@ -2,7 +2,6 @@ package org.puclab.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,10 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "tb_aluno")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -22,6 +20,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Aluno extends Usuario {
 
-    @OneToMany
-    private List<Matricula> matriculas;
+    @OneToMany(mappedBy = "aluno", orphanRemoval = true)
+    public Set<Matricula> matriculas;
 }

@@ -1,8 +1,7 @@
 package org.puclab.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,8 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "tb_professor")
-@MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -24,7 +21,8 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Professor extends Usuario {
 
-    private Set<Disciplina> disciplinas;
+    @OneToMany(mappedBy = "professor", orphanRemoval = true)
+    public Set<Disciplina> disciplinas;
 
     public Set<Aluno> obterAlunosDisciplina(Disciplina disciplina) {
         return new HashSet<>();

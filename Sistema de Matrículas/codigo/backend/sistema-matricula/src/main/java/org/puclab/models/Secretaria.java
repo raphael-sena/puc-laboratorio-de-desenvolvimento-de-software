@@ -1,16 +1,12 @@
 package org.puclab.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "tb_secretaria")
-@MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -18,7 +14,10 @@ import java.util.Set;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 public class Secretaria extends Usuario {
-    private Set<Usuario> usuarios;
+
+    @OneToMany(orphanRemoval = true)
+    @JoinColumn(name = "secretaria_id")
+    public Set<Usuario> usuarios;
 
     // TODO
     public Set<Aluno> getAlunos() {

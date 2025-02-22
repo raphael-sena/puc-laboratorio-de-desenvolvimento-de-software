@@ -17,17 +17,18 @@ public class Disciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String nome;
+    public Long id;
+    public String nome;
 
     @ManyToOne
-    private Professor professor;
+    @JoinColumn(name = "disciplina_id")
+    public Professor professor;
 
     @Enumerated(EnumType.STRING)
-    private StatusDisciplina status;
+    public StatusDisciplina status;
 
-    @ManyToMany
-    private Set<Aluno> alunos;
+    @ManyToMany(mappedBy = "disciplinas")
+    public Set<Matricula> matriculas;
 
     // TODO
     private void cancelarDisciplina() {

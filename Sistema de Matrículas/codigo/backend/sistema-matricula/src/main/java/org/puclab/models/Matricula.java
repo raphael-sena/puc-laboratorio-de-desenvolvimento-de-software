@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.puclab.models.enums.StatusMatricula;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_matricula")
@@ -17,17 +17,22 @@ public class Matricula {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
-    private LocalDate dataMatricula;
+    public LocalDate dataMatricula;
 
     @ManyToOne
-    private Aluno aluno;
+    @JoinColumn(name = "aluno_id")
+    public Aluno aluno;
 
-//    private Set<Disciplina> disciplinas;
+    @ManyToMany
+    @JoinTable(name = "tb_matricula_disciplina",
+            joinColumns = @JoinColumn(name = "matricula_id"),
+            inverseJoinColumns = @JoinColumn(name = "disciplina_id"))
+    public Set<Disciplina> disciplinas;
 
     @Enumerated
-    private StatusMatricula statusMatricula;
+    public StatusMatricula statusMatricula;
 
 
     // TODO
