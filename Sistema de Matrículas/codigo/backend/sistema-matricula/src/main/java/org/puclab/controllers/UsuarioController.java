@@ -1,14 +1,15 @@
 package org.puclab.controllers;
 
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.puclab.models.Usuario;
 import org.puclab.models.dtos.UsuarioDTO;
 import org.puclab.services.SecretariaService;
+
+import java.util.List;
+import java.util.Set;
 
 @Path("/usuario")
 
@@ -20,6 +21,13 @@ public class UsuarioController {
 
     public UsuarioController(SecretariaService secretariaService) {
         this.secretariaService = secretariaService;
+    }
+
+    @GET
+    public Response findAll(@QueryParam("page") @DefaultValue("0") Integer page,
+                            @QueryParam("pageSize") @DefaultValue("10") Integer pageSize) {
+        var usuarios = secretariaService.findAll(page, pageSize);
+        return Response.ok().entity(usuarios).build();
     }
 
     @POST
