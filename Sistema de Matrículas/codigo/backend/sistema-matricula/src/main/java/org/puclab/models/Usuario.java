@@ -10,7 +10,6 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
-//@MappedSuperclass
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor
@@ -26,4 +25,9 @@ public class Usuario extends PanacheEntityBase implements Serializable {
 
     public String nome;
     public String senha;
+
+    public Usuario(String nome, String senha) {
+        this.nome = nome;
+        this.senha = senha;
+    }
 }

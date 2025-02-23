@@ -1,5 +1,6 @@
 package org.puclab.models;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.*;
 import org.puclab.models.enums.StatusDisciplina;
@@ -13,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class Disciplina {
+public class Disciplina extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -19,6 +19,10 @@ public class Secretaria extends Usuario {
     @JoinColumn(name = "secretaria_id")
     public Set<Usuario> usuarios;
 
+    public Secretaria(String nome, String senha) {
+        super(nome, senha);
+    }
+
     // TODO
     public Set<Aluno> getAlunos() {
         return new HashSet<>();

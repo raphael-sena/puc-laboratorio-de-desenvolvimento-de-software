@@ -24,6 +24,11 @@ public class Professor extends Usuario {
     @OneToMany(mappedBy = "professor", orphanRemoval = true)
     public Set<Disciplina> disciplinas;
 
+    public Professor(String nome, String senha) {
+        super(nome, senha);
+    }
+
+    // TODO
     public Set<Aluno> obterAlunosDisciplina(Disciplina disciplina) {
         return new HashSet<>();
     }

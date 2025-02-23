@@ -22,4 +22,8 @@ public class Aluno extends Usuario {
 
     @OneToMany(mappedBy = "aluno", orphanRemoval = true)
     public Set<Matricula> matriculas;
+
+    public Aluno(String nome, String senha) {
+        super(nome, senha);
+    }
 }

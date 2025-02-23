@@ -16,6 +16,4 @@ public class CursoController {
     public Response getCurso() {
         return Response.ok().entity("Curso").build();
     }
-
-
 }
