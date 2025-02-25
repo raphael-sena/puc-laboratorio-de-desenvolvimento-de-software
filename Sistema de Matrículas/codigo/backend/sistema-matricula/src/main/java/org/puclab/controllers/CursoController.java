@@ -18,16 +18,37 @@ public class CursoController {
         this.cursoService = cursoService;
     }
 
+    @GET
+    public Response findAll(@QueryParam("page") @DefaultValue("0") Integer page,
+                            @QueryParam("pageSize") @DefaultValue("10") Integer pageSize) {
+        var cursos = cursoService.findAll(page, pageSize);
+        return Response.ok().entity(cursos).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response findById(@PathParam("id") Long id) {
+        return Response.ok().entity(cursoService.findById(id)).build();
+    }
+
     @POST
     @Transactional
     public Response criarCurso(CursoDTO cursoDTO) {
         return Response.ok().entity(cursoService.criarCurso(cursoDTO)).build();
     }
 
-    @GET
-    public Response findAll(@QueryParam("page") @DefaultValue("0") Integer page,
-                            @QueryParam("pageSize") @DefaultValue("10") Integer pageSize) {
-        var cursos = cursoService.findAll(page, pageSize);
-        return Response.ok().entity(cursos).build();
+    @PUT
+    @Transactional
+    @Path("/{id}")
+    public Response atualizarCurso(CursoDTO cursoDTO, @PathParam("id") Long id) {
+        return Response.ok().entity(cursoService.atualizarCurso(cursoDTO, id)).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public Response deletarCurso(@PathParam("id") Long id) {
+        cursoService.deletarCurso(id);
+        return Response.noContent().build();
     }
 }
