@@ -59,6 +59,14 @@ public class CursoController {
         return Response.ok().entity(cursoService.associarCurriculoEmCurso(curriculoId, id)).build();
     }
 
+    @PUT
+    @Transactional
+    @Path("/{id}/curriculos/{curriculoId}")
+    public Response desassociarCurriculoEmCurso(@PathParam("curriculoId") Long curriculoId, @PathParam("id") Long id) {
+        cursoService.desassociarCurriculoEmCurso(curriculoId, id);
+        return Response.noContent().build();
+    }
+
     @GET
     @Transactional
     @Path("/{id}/curriculos")

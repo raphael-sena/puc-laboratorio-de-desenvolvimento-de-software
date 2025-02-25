@@ -81,4 +81,11 @@ public class CursoService {
         Curso curso = Curso.findById(id);
         return curso.getCurriculos();
     }
+
+    public void desassociarCurriculoEmCurso(Long curriculoId, Long id) {
+        Curso curso = Curso.findById(id);
+        Curriculo curriculo = Curriculo.findById(curriculoId);
+
+        curso.getCurriculos().remove(curriculo);
+    }
 }
