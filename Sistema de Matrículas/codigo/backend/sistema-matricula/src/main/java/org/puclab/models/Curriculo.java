@@ -20,6 +20,6 @@ public class Curriculo extends PanacheEntityBase {
     private Long id;
     private String nome;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Disciplina> disciplinas;
 }

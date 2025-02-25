@@ -3,10 +3,13 @@ package org.puclab.services;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.puclab.exceptions.ObjectNotFoundException;
+import org.puclab.models.Curriculo;
 import org.puclab.models.Curso;
+import org.puclab.models.dtos.CurriculoDTO;
 import org.puclab.models.dtos.CursoDTO;
 
 import java.util.List;
+import java.util.Set;
 
 @ApplicationScoped
 public class CursoService {
@@ -55,5 +58,27 @@ public class CursoService {
         curso.setNome(cursoDTO.getNome());
         curso.persist();
         cursoDTO.setId(curso.getId());
+    }
+
+    public CurriculoDTO associarCurriculoEmCurso(Long curriculoId, Long id) {
+
+        Curso curso = Curso.findById(id);
+        Curriculo curriculo = Curriculo.findById(curriculoId);
+
+        CurriculoDTO curriculoDTO = new CurriculoDTO();
+
+        curso.getCurriculos().add(curriculo);
+        curso.persist();
+
+        curriculoDTO.setId(curriculoId);
+        curriculoDTO.setDisciplinas(curriculo.getDisciplinas());
+        curriculoDTO.setNome(curriculo.getNome());
+
+        return curriculoDTO;
+    }
+
+    public Set<Curriculo> obterCurriculos(Long id) {
+        Curso curso = Curso.findById(id);
+        return curso.getCurriculos();
     }
 }

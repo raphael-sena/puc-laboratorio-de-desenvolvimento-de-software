@@ -22,7 +22,7 @@ public class Curso extends PanacheEntityBase {
 
     private String nome;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Curriculo> curriculos = new HashSet<>();
 
     private int creditos;
