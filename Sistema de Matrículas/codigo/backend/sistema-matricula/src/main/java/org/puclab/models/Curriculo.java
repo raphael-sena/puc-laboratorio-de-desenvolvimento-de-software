@@ -22,9 +22,4 @@ public class Curriculo extends PanacheEntityBase {
 
     @ManyToMany
     private Set<Disciplina> disciplinas;
-
-    // TODO
-    public void criarDisciplina(Disciplina disciplina){
-
-    }
 }

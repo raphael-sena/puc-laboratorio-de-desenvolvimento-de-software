@@ -45,15 +45,15 @@ public class CursoService {
         return cursoDTO;
     }
 
+    public void deletarCurso(Long id) {
+        Curso curso = Curso.findById(id);
+        curso.delete();
+    }
+
     private static void fromDTO(CursoDTO cursoDTO, Curso curso) {
         curso.setCreditos(cursoDTO.getCreditos());
         curso.setNome(cursoDTO.getNome());
         curso.persist();
         cursoDTO.setId(curso.getId());
-    }
-
-    public void deletarCurso(Long id) {
-        Curso curso = Curso.findById(id);
-        curso.delete();
     }
 }
