@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,8 +22,8 @@ public class Curso extends PanacheEntityBase {
 
     private String nome;
 
-    @OneToMany
-    private Set<Curriculo> curriculos;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Curriculo> curriculos = new HashSet<>();
 
     private int creditos;
 }
