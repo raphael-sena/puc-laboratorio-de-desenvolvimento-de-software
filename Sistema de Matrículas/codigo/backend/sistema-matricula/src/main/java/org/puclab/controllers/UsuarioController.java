@@ -4,12 +4,8 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.puclab.models.Usuario;
 import org.puclab.models.dtos.UsuarioDTO;
 import org.puclab.services.SecretariaService;
-
-import java.util.List;
-import java.util.Set;
 
 @Path("/usuario")
 

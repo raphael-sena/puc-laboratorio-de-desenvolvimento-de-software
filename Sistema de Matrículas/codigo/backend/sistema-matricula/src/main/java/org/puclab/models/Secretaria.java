@@ -1,9 +1,13 @@
 package org.puclab.models;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,28 +25,5 @@ public class Secretaria extends Usuario {
 
     public Secretaria(String nome, String senha) {
         super(nome, senha);
-    }
-
-    // TODO
-    public Set<Aluno> getAlunos() {
-        return new HashSet<>();
-    }
-
-    // TODO
-    public Set<Aluno> getProfessores() {
-        return new HashSet<>();
-    }
-
-    // TODO
-    public void editarUsuario(Usuario usuario) {
-    }
-
-//    // TODO
-//    public Curriculo gerarCurriculo(Set<Disciplina> disciplinas) {
-//        return new Curriculo();
-//    }
-
-    // TODO
-    public void criarUsuario(Usuario usuario) {
     }
 }
