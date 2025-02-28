@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.puclab.models.dtos.UsuarioDTO;
 import org.puclab.services.SecretariaService;
+import org.puclab.services.UsuarioService;
 
 @Path("/usuario")
 
@@ -13,9 +14,12 @@ import org.puclab.services.SecretariaService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class UsuarioController {
 
+    private final UsuarioService usuarioService;
+
     private final SecretariaService secretariaService;
 
-    public UsuarioController(SecretariaService secretariaService) {
+    public UsuarioController(UsuarioService usuarioService, SecretariaService secretariaService) {
+        this.usuarioService = usuarioService;
         this.secretariaService = secretariaService;
     }
 
@@ -30,5 +34,11 @@ public class UsuarioController {
     @Transactional
     public Response criarUsuario(UsuarioDTO usuarioDTO) {
         return Response.ok().entity(secretariaService.criarUsuario(usuarioDTO)).build();
+    }
+
+    @GET
+    @Path("/{id}/tipo")
+    public Response getTipoUsuario(@PathParam("id") long id) {
+        return Response.ok().entity(usuarioService.getTipoUsuario(id)).build();
     }
 }
