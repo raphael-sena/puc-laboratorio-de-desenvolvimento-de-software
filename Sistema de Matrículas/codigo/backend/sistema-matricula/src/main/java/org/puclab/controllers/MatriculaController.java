@@ -1,47 +1,104 @@
 package org.puclab.controllers;
 
-
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.puclab.models.Matricula;
+import org.puclab.exceptions.BusinessException;
+import org.puclab.models.dtos.MatriculaRequestDTO;
 import org.puclab.services.MatriculaService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
-@Path("/matricula")
+@Path("/matriculas")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MatriculaController {
 
-    private final MatriculaService matriculaService;
+    private static final Logger LOGGER = Logger.getLogger(MatriculaController.class.getName());
 
-    public MatriculaController(MatriculaService matriculaService) {
-        this.matriculaService = matriculaService;
-    }
+    @Inject
+    MatriculaService matriculaService;
 
     @POST
-    @Path("matricular/aluno/{alunoId}/disciplinas")
     @Transactional
-    public Response matricularAlunoEmDisciplinas(@PathParam("alunoId") long alunoId, List<Long> disciplinaIds) {
+    public Response matricularAluno(MatriculaRequestDTO request) {
         try {
-            Matricula matricula = matriculaService.matricularAlunoEmDisciplinas(alunoId, disciplinaIds);
-            return Response.ok(matricula).build();
-        } catch (RuntimeException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+            // Validações básicas
+            if (request.alunoId == null) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(Map.of("erro", "ID do aluno é obrigatório"))
+                        .build();
+            }
+
+            if (request.disciplinasObrigatorias == null || request.disciplinasObrigatorias.size() > 4) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(Map.of("erro", "Deve informar no máximo 4 disciplinas obrigatórias"))
+                        .build();
+            }
+
+            if (request.disciplinasOptativas == null || request.disciplinasOptativas.size() > 2) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(Map.of("erro", "Deve informar no máximo 2 disciplinas optativas"))
+                        .build();
+            }
+
+            // Realiza a matrícula
+            var matricula = matriculaService.matricularAluno(
+                    request.alunoId,
+                    request.disciplinasObrigatorias,
+                    request.disciplinasOptativas
+            );
+
+            return Response.status(Response.Status.CREATED)
+                    .entity(Map.of(
+                            "id", matricula.getId(),
+                            "dataMatricula", matricula.getDataMatricula(),
+                            "quantidadeObrigatorias", matricula.getDisciplinasObrigatorias().size(),
+                            "quantidadeOptativas", matricula.getDisciplinasOptativas().size(),
+                            "mensagem", "Matrícula realizada com sucesso"
+                    ))
+                    .build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(Map.of("erro", e.getMessage()))
+                    .build();
+        } catch (Exception e) {
+            LOGGER.severe("Erro ao processar matrícula: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(Map.of("erro", "Erro interno ao processar a matrícula"))
+                    .build();
         }
     }
 
-    @POST
-    @Path("desmatricular/aluno/{alunoId}/disciplinas")
+    @DELETE
+    @Path("/{alunoId}/disciplinas")
     @Transactional
-    public Response desmatricularAlunoEmDisciplinas(@PathParam("alunoId") long alunoId, List<Long> disciplinaIds) {
+    public Response desmatricularAluno(@PathParam("alunoId") Long alunoId, List<Long> disciplinaIds) {
         try {
-            Matricula matricula = matriculaService.desmatricularAlunoEmDisciplinas(alunoId, disciplinaIds);
-            return Response.ok(matricula).build();
-        } catch (RuntimeException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+            var matricula = matriculaService.desmatricularAlunoEmDisciplinas(alunoId, disciplinaIds);
+
+            return Response.ok()
+                    .entity(Map.of(
+                            "id", matricula.getId(),
+                            "status", matricula.getStatusMatricula(),
+                            "quantidadeObrigatorias", matricula.getDisciplinasObrigatorias().size(),
+                            "quantidadeOptativas", matricula.getDisciplinasOptativas().size(),
+                            "mensagem", "Disciplinas removidas com sucesso"
+                    ))
+                    .build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(Map.of("erro", e.getMessage()))
+                    .build();
+        } catch (Exception e) {
+            LOGGER.severe("Erro ao processar desmatrícula: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(Map.of("erro", "Erro interno ao processar a desmatrícula"))
+                    .build();
         }
     }
 }
