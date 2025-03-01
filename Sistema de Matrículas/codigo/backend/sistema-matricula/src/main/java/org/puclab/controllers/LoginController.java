@@ -7,6 +7,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.puclab.models.dtos.LoginDTO;
 import org.puclab.models.dtos.UsuarioDTO;
 import org.puclab.services.UsuarioService;
 
@@ -23,8 +24,8 @@ public class LoginController {
 
     @POST
     @Transactional
-    public Response login(UsuarioDTO usuarioDTO) {
-        return Response.ok().entity(usuarioService.login(usuarioDTO)).build();
+    public Response login(LoginDTO loginDTO) {
+        return Response.ok().entity(usuarioService.login(loginDTO)).build();
     }
 
 }

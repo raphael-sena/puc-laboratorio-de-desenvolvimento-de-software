@@ -2,9 +2,9 @@ package org.puclab.services;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.puclab.models.Usuario;
+import org.puclab.models.dtos.LoginDTO;
 import org.puclab.models.dtos.UsuarioDTO;
 
 import java.util.List;
@@ -48,9 +48,9 @@ public class UsuarioService {
     }
 
 
-    public boolean login(UsuarioDTO usuarioDTO) {
-        Usuario usuario = Usuario.findById(usuarioDTO.getId());
-        return usuario.senha.equals(usuarioDTO.getSenha());
+    public boolean login(LoginDTO loginDTO) {
+        Usuario usuario = Usuario.findById(loginDTO.getId());
+        return usuario.senha.equals(loginDTO.getSenha());
     }
 
     public String getTipoUsuario(long id) {
