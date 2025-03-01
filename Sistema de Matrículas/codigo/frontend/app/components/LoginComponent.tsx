@@ -55,6 +55,9 @@ export default function Login() {
         const userType = await getUserType(loginData.id);
 
         console.log("Login bem-sucedido!");
+
+        localStorage.setItem("token", loginData.id.toString());
+
         console.log("Tipo do usuário:", userType);
 
         if (userType === "secretaria".toUpperCase()) {
