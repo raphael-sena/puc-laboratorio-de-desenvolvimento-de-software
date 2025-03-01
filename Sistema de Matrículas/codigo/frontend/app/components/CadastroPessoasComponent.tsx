@@ -134,7 +134,7 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
               </FormItem>
             )}
           />
-          <Button className="hover:cursor-pointer" type="submit">
+          <Button className="hover:cursor-pointer w-full" type="submit">
             Enviar
           </Button>
         </form>

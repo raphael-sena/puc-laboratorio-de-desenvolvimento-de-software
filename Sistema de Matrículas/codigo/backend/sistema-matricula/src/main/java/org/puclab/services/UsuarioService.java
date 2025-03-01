@@ -73,4 +73,31 @@ public class UsuarioService {
         Usuario usuario = Usuario.findById(id);
         usuario.delete();
     }
+
+    public Integer getTotalAlunos() {
+        return (int) Usuario.findAll()
+                .stream()
+                .filter(u -> u.getClass().getSimpleName().equalsIgnoreCase("ALUNO"))
+                .count();
+    }
+
+    public Integer getTotalProfessores() {
+        return (int) Usuario.findAll()
+                .stream()
+                .filter(u -> u.getClass().getSimpleName().equalsIgnoreCase("PROFESSOR"))
+                .count();
+    }
+
+    public Integer getTotalSecretaria() {
+        return (int) Usuario.findAll()
+                .stream()
+                .filter(u -> u.getClass().getSimpleName().equalsIgnoreCase("SECRETARIA"))
+                .count();
+    }
+
+    public Integer getTotalUsuarios() {
+        return (int) Usuario.findAll()
+                .stream()
+                .count();
+    }
 }

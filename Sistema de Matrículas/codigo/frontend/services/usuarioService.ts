@@ -65,6 +65,26 @@ export const getUserById = async (id: number): Promise<Usuario> => {
   return response.data;
 };
 
+export const getTotalAlunos = async (): Promise<number> => {
+  const response = await api.get<number>(`/usuario/alunos/total`);
+  return response.data;
+};
+
+export const getTotalProfessores = async (): Promise<number> => {
+  const response = await api.get<number>(`/usuario/professores/total`);
+  return response.data;
+};
+
+export const getTotalSecretarias = async (): Promise<number> => {
+  const response = await api.get<number>(`/usuario/secretarias/total`);
+  return response.data;
+};
+
+export const getTotalUsuarios = async (): Promise<number> => {
+  const response = await api.get<number>(`/usuario/total`);
+  return response.data;
+};
+
 export const updateUser = async (
   id: number,
   usuario: Usuario

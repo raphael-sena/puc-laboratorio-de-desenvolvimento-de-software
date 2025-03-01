@@ -58,13 +58,21 @@ export default function GerenciarPessoasComponent() {
   };
 
   useEffect(() => {
-    users.forEach((user) => fetchUserType(user.id));
+    users.forEach((user) => {
+      if (user.id !== undefined) {
+        fetchUserType(user.id);
+      }
+    });
     fetchUsers(currentPage, pageSize);
   }, [currentPage, pageSize]);
 
   useEffect(() => {
-    users.forEach((user) => fetchUserType(user.id));
-  }, [users]);
+      users.forEach((user) => {
+        if (user.id !== undefined) {
+          fetchUserType(user.id);
+        }
+      });
+    }, [users]);
 
   const handleEditUser = (id: number) => {
     setSelectedUserId(id);
@@ -162,7 +170,7 @@ export default function GerenciarPessoasComponent() {
                     className="hover:cursor-pointer"
                     title="Editar"
                     variant="outline"
-                    onClick={() => handleEditUser(user.id)}
+                    onClick={() => user.id !== undefined && handleEditUser(user.id)}
                   >
                     <FaGear />
                   </Button>
@@ -170,7 +178,7 @@ export default function GerenciarPessoasComponent() {
                     className="hover:cursor-pointer"
                     title="Excluir"
                     variant="destructive"
-                    onClick={() => handleDeleteUser(user.id)}
+                    onClick={() => user.id !== undefined && handleDeleteUser(user.id)}
                   >
                     <FaTrash />
                   </Button>

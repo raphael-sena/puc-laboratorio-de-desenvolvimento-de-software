@@ -46,6 +46,30 @@ public class UsuarioController {
         return Response.ok().entity(usuarios).build();
     }
 
+    @GET
+    @Path("/alunos/total")
+    public Response getTotalAlunos() {
+        return Response.ok().entity(usuarioService.getTotalAlunos()).build();
+    }
+
+    @GET
+    @Path("/professores/total")
+    public Response getTotalProfessores() {
+        return Response.ok().entity(usuarioService.getTotalProfessores()).build();
+    }
+
+    @GET
+    @Path("/secretarias/total")
+    public Response getTotalSecretarias() {
+        return Response.ok().entity(usuarioService.getTotalSecretaria()).build();
+    }
+
+    @GET
+    @Path("/total")
+    public Response getTotalUsuarios() {
+        return Response.ok().entity(usuarioService.getTotalUsuarios()).build();
+    }
+
     @POST
     @Transactional
     public Response criarUsuario(UsuarioDTO usuarioDTO) {
