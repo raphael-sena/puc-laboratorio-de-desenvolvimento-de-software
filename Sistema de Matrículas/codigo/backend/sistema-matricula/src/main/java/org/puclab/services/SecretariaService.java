@@ -13,21 +13,6 @@ import java.util.List;
 @ApplicationScoped
 public class SecretariaService implements PeriodoMatricula {
 
-    private LocalDate[] periodoAtual;
-
-    public List<PanacheEntityBase> findAll(Integer page, Integer pageSize) {
-        return Usuario.findAll()
-                .page(page, pageSize)
-                .list();
-    }
-
-    public Usuario criarUsuario(UsuarioDTO usuarioDTO) {
-        Usuario usuario = UsuarioFactory.criarUsuario(usuarioDTO);
-        usuario.persist();
-        return usuario;
-    }
-
-
     @Override
     @Transactional
     public LocalDate[] gerarPeriodoMatricula(LocalDate dataInicio, LocalDate dataFim) {

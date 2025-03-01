@@ -24,8 +24,8 @@ public class Professor extends Usuario {
     @OneToMany(mappedBy = "professor", orphanRemoval = true)
     public Set<Disciplina> disciplinas;
 
-    public Professor(String nome, String senha) {
-        super(nome, senha);
+    public Professor(String nome, String senha, String tipo) {
+        super(nome, senha, tipo);
     }
 
     // TODO

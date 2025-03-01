@@ -24,21 +24,52 @@ public class UsuarioController {
     }
 
     @GET
+    @Path("/{id}")
+    public Response findById(@PathParam("id") Long id) {
+        var usuario = usuarioService.findById(id);
+        return Response.ok().entity(usuario).build();
+    }
+
+    @GET
     public Response findAll(@QueryParam("page") @DefaultValue("0") Integer page,
                             @QueryParam("pageSize") @DefaultValue("10") Integer pageSize) {
-        var usuarios = secretariaService.findAll(page, pageSize);
+        var usuarios = usuarioService.findAll(page, pageSize);
+        return Response.ok().entity(usuarios).build();
+    }
+
+    @GET
+    @Path("/search")
+    public Response searchUsuarios(@QueryParam("query") String query,
+                                   @QueryParam("page") @DefaultValue("0") Integer page,
+                                   @QueryParam("pageSize") @DefaultValue("10") Integer pageSize) {
+        var usuarios = usuarioService.searchUsuarios(query, page, pageSize);
         return Response.ok().entity(usuarios).build();
     }
 
     @POST
     @Transactional
     public Response criarUsuario(UsuarioDTO usuarioDTO) {
-        return Response.ok().entity(secretariaService.criarUsuario(usuarioDTO)).build();
+        return Response.ok().entity(usuarioService.criarUsuario(usuarioDTO)).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Transactional
+    public Response atualizarUsuario(@PathParam("id") Long id, UsuarioDTO usuarioDTO) {
+        return Response.ok().entity(usuarioService.atualizarUsuario(id, usuarioDTO)).build();
     }
 
     @GET
     @Path("/{id}/tipo")
-    public Response getTipoUsuario(@PathParam("id") long id) {
+    public Response getTipoUsuario(@PathParam("id") Long id) {
         return Response.ok().entity(usuarioService.getTipoUsuario(id)).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public Response deletarUsuario(@PathParam("id") Long id) {
+        usuarioService.deletarUsuario(id);
+        return Response.noContent().build();
     }
 }

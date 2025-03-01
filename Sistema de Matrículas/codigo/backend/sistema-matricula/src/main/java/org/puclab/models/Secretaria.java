@@ -23,7 +23,7 @@ public class Secretaria extends Usuario {
     @JoinColumn(name = "secretaria_id")
     public Set<Usuario> usuarios;
 
-    public Secretaria(String nome, String senha) {
-        super(nome, senha);
+    public Secretaria(String nome, String senha, String tipo) {
+        super(nome, senha, tipo);
     }
 }

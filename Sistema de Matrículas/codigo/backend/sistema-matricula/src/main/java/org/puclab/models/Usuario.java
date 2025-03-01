@@ -25,9 +25,11 @@ public class Usuario extends PanacheEntityBase implements Serializable {
 
     public String nome;
     public String senha;
+    public String tipo;
 
-    public Usuario(String nome, String senha) {
+    public Usuario(String nome, String senha, String tipo) {
         this.nome = nome;
         this.senha = senha;
+        this.tipo = tipo;
     }
 }
