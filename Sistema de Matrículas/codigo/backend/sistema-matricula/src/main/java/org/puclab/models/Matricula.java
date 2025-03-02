@@ -26,7 +26,7 @@ public class Matricula extends PanacheEntityBase {
 
     public LocalDate dataMatricula;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "aluno_id")
     public Aluno aluno;
 

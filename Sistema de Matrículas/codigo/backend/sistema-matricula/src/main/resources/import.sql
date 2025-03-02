@@ -4,3 +4,6 @@
 -- insert into myentity (id, field) values(2, 'field-2');
 -- insert into myentity (id, field) values(3, 'field-3');
 -- alter sequence myentity_seq restart with 4;
+
+INSERT INTO usuario (tipo, nome, senha) VALUES ('SECRETARIA', 'ICEI', '123456');
+INSERT INTO usuario (tipo, nome, senha) VALUES ('ALUNO', 'Raphael Sena', '123456');
