@@ -22,6 +22,12 @@ public class DisciplinaController {
         return Response.ok().entity(disciplinaService.findAll()).build();
     }
 
+    @GET
+    @Path("/{disciplinaId}")
+    public Response findById(@PathParam("disciplinaId") long disciplinaId) {
+        return Response.ok().entity(disciplinaService.findById(disciplinaId)).build();
+    }
+
     @POST
     @Path("/secretaria/{usuarioId}")
     @Transactional
@@ -46,12 +52,35 @@ public class DisciplinaController {
         }
     }
 
+    @DELETE
+    @Path("/secretaria/{usuarioId}/{disciplinaId}")
+    @Transactional
+    public Response deletarDisciplina(@PathParam("usuarioId") long usuarioId, @PathParam("disciplinaId") long disciplinaId) {
+        try {
+            return Response.noContent().entity(disciplinaService.deletarDisciplina(usuarioId, disciplinaId)).build();
+        } catch (RuntimeException ex) {
+            return Response.status(Response.Status.FORBIDDEN).entity(ex.getMessage()).build();
+        }
+    }
+
     @PUT
     @Path("/{disciplinaId}/professor/{usuarioId}")
     @Transactional
     public Response associarProfessor(@PathParam("usuarioId") long usuarioId, @PathParam("disciplinaId") long disciplinaId) {
         try {
             Disciplina disciplinaAtualizada = disciplinaService.associarProfessor(usuarioId, disciplinaId);
+            return Response.status(Response.Status.OK).entity(disciplinaAtualizada).build();
+        } catch (RuntimeException ex) {
+            return Response.status(Response.Status.FORBIDDEN).entity(ex.getMessage()).build();
+        }
+    }
+
+    @PUT
+    @Path("/{disciplinaId}/professor")
+    @Transactional
+    public Response desassociarProfessor(@PathParam("disciplinaId") long disciplinaId) {
+        try {
+            Disciplina disciplinaAtualizada = disciplinaService.desassociarProfessor(disciplinaId);
             return Response.status(Response.Status.OK).entity(disciplinaAtualizada).build();
         } catch (RuntimeException ex) {
             return Response.status(Response.Status.FORBIDDEN).entity(ex.getMessage()).build();
