@@ -19,7 +19,7 @@ public class Disciplina extends PanacheEntityBase {
     public Long id;
     public String nome;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "disciplina_id")
     public Professor professor;
 

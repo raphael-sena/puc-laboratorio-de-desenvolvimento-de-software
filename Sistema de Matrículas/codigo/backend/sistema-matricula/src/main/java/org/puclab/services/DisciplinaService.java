@@ -5,6 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.puclab.models.Disciplina;
+import org.puclab.models.Professor;
 import org.puclab.models.Secretaria;
 import org.puclab.models.Usuario;
 import org.puclab.models.dtos.DisciplinaDTO;
@@ -21,6 +22,10 @@ public class DisciplinaService {
 
     public DisciplinaService(SecretariaService secretariaService) {
         this.secretariaService = secretariaService;
+    }
+
+    public List<Disciplina> findAll() {
+        return Disciplina.findAll().list();
     }
 
     @Transactional
@@ -44,6 +49,27 @@ public class DisciplinaService {
         return disciplina;
     }
 
+    public Disciplina atualizarDisciplina(long usuarioId, long disciplinaId, DisciplinaDTO disciplinaDTO) {
+        Usuario usuario = Usuario.findById(usuarioId);
+        if (usuario == null) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+
+        if (!(usuario instanceof Secretaria)) {
+            throw new RuntimeException("Apenas usuários do tipo secretaria podem atualizar disciplinas.");
+        }
+
+        Disciplina disciplina = Disciplina.findById(disciplinaId);
+        if (disciplina == null) {
+            throw new RuntimeException("Disciplina não encontrada");
+        }
+
+        disciplina.setNome(disciplinaDTO.getNome());
+        disciplina.persist();
+
+        return disciplina;
+    }
+
     @Scheduled(cron = "0 0 0 * * ?")
     @Transactional
     public void verificarDisciplinasComMenosTresAlunos() {
@@ -55,4 +81,21 @@ public class DisciplinaService {
         }
     }
 
+
+    public Disciplina associarProfessor(long usuarioId, long disciplinaId) {
+        Professor usuario = Professor.findById(usuarioId);
+        if (usuario == null) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+
+        Disciplina disciplina = Disciplina.findById(disciplinaId);
+        if (disciplina == null) {
+            throw new RuntimeException("Disciplina não encontrada");
+        }
+
+        disciplina.setProfessor(usuario);
+        disciplina.persist();
+
+        return disciplina;
+    }
 }

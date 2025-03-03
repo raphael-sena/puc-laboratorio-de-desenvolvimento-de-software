@@ -3,8 +3,13 @@ package org.puclab.services;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.puclab.models.Aluno;
+import org.puclab.models.Professor;
+import org.puclab.models.Secretaria;
 import org.puclab.models.Usuario;
+import org.puclab.models.dtos.DisciplinaDTO;
 import org.puclab.models.dtos.LoginDTO;
+import org.puclab.models.dtos.ProfessorResponseDTO;
 import org.puclab.models.dtos.UsuarioDTO;
 
 import java.util.List;
@@ -14,7 +19,26 @@ import java.util.stream.Collectors;
 public class UsuarioService {
 
     public Object findById(Long id) {
-        return Usuario.findById(id);
+        Usuario usuario = Usuario.findById(id);
+        if (usuario instanceof Aluno) {
+            return Aluno.findById(id);
+        } else if (usuario instanceof Secretaria) {
+            return Secretaria.findById(id);
+        } else if (usuario instanceof Professor) {
+            ProfessorResponseDTO professorResponseDTO = new ProfessorResponseDTO();
+
+            List<DisciplinaDTO> disciplinaDTOS = ((Professor) usuario).getDisciplinas()
+                    .stream()
+                    .map(disciplina -> new DisciplinaDTO(disciplina.id, disciplina.nome))
+                    .toList();
+
+            professorResponseDTO.setId(id);
+            professorResponseDTO.setNome(usuario.getNome());
+            professorResponseDTO.setDisciplinas(disciplinaDTOS);
+            return professorResponseDTO;
+        } else {
+            return Usuario.findById(id);
+        }
     }
 
     public List<PanacheEntityBase> findAll(Integer page, Integer pageSize) {
