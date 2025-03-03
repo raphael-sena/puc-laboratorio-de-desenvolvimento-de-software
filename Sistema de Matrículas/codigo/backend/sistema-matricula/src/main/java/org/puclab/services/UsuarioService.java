@@ -7,12 +7,11 @@ import org.puclab.models.Aluno;
 import org.puclab.models.Professor;
 import org.puclab.models.Secretaria;
 import org.puclab.models.Usuario;
-import org.puclab.models.dtos.DisciplinaDTO;
-import org.puclab.models.dtos.LoginDTO;
-import org.puclab.models.dtos.ProfessorResponseDTO;
-import org.puclab.models.dtos.UsuarioDTO;
+import org.puclab.models.dtos.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -20,11 +19,38 @@ public class UsuarioService {
 
     public Object findById(Long id) {
         Usuario usuario = Usuario.findById(id);
+
         if (usuario instanceof Aluno) {
-            return Aluno.findById(id);
-        } else if (usuario instanceof Secretaria) {
+            AlunoResponseDTO alunoResponseDTO = new AlunoResponseDTO();
+
+            alunoResponseDTO.setId(id);
+            alunoResponseDTO.setNome(usuario.getNome());
+
+            alunoResponseDTO.setMatriculas(((Aluno) usuario).getMatriculas()
+                    .stream()
+                    .map(matricula -> {
+                        Set<DisciplinaDTO> disciplinaDTOS = new HashSet<>();
+
+                        matricula.disciplinasObrigatorias
+                                .forEach(disciplina -> disciplinaDTOS.add(new DisciplinaDTO(disciplina.id, disciplina.nome)));
+
+                        matricula.disciplinasOptativas
+                                .forEach(disciplina -> disciplinaDTOS.add(new DisciplinaDTO(disciplina.id, disciplina.nome)));
+
+                        return new MatriculaDTO(matricula.id, matricula.dataMatricula, matricula.aluno.id, disciplinaDTOS, matricula.statusMatricula);
+                    })
+                    .collect(Collectors.toSet()));
+
+            return alunoResponseDTO;
+        }
+
+
+        else if (usuario instanceof Secretaria) {
             return Secretaria.findById(id);
-        } else if (usuario instanceof Professor) {
+        }
+
+
+        else if (usuario instanceof Professor) {
             ProfessorResponseDTO professorResponseDTO = new ProfessorResponseDTO();
 
             List<DisciplinaDTO> disciplinaDTOS = ((Professor) usuario).getDisciplinas()
