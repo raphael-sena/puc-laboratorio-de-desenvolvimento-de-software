@@ -14,5 +14,5 @@ import java.util.List;
 public class CurriculoDTO {
     private Long id;
     private String nome;
-    private List<Long> disciplinas;
+    private List<DisciplinaDTO> disciplinas;
 }

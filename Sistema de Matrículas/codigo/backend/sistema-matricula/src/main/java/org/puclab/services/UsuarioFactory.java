@@ -11,7 +11,7 @@ import org.puclab.models.dtos.UsuarioDTO;
 public class UsuarioFactory {
 
     public static Usuario criarUsuario(UsuarioDTO usuarioDTO) {
-        Usuario usuario = null;
+        Usuario usuario;
         String tipo = usuarioDTO.getTipo().toUpperCase();
         switch (tipo) {
             case "ALUNO" -> usuario = new Aluno(usuarioDTO.getNome(), usuarioDTO.getSenha(), tipo);
