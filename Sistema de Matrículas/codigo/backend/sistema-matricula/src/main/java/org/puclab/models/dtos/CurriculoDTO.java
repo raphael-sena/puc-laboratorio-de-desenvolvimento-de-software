@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.puclab.models.Disciplina;
 
-import java.util.Set;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +14,5 @@ import java.util.Set;
 public class CurriculoDTO {
     private Long id;
     private String nome;
-    private Set<Disciplina> disciplinas;
+    private List<Long> disciplinas;
 }

@@ -1,5 +1,6 @@
 package org.puclab.models;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,9 +26,11 @@ public class Usuario extends PanacheEntityBase implements Serializable {
 
     public String nome;
     public String senha;
+    public String tipo;
 
-    public Usuario(String nome, String senha) {
+    public Usuario(String nome, String senha, String tipo) {
         this.nome = nome;
         this.senha = senha;
+        this.tipo = tipo;
     }
 }

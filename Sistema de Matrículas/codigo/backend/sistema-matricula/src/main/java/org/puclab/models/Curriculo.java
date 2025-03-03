@@ -4,7 +4,8 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_curriculo")
@@ -20,6 +21,11 @@ public class Curriculo extends PanacheEntityBase {
     private Long id;
     private String nome;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Disciplina> disciplinas;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "curriculo_disciplina",
+            joinColumns = @JoinColumn(name = "curriculo_id"),
+            inverseJoinColumns = @JoinColumn(name = "disciplina_id")
+    )
+    private List<Disciplina> disciplinas = new ArrayList<>();
 }

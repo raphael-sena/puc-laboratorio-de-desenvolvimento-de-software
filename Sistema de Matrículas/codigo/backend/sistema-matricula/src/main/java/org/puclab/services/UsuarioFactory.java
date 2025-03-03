@@ -12,10 +12,11 @@ public class UsuarioFactory {
 
     public static Usuario criarUsuario(UsuarioDTO usuarioDTO) {
         Usuario usuario = null;
-        switch (usuarioDTO.getTipo().toUpperCase()) {
-            case "ALUNO" -> usuario = new Aluno(usuarioDTO.getNome(), usuarioDTO.getSenha());
-            case "PROFESSOR" -> usuario = new Professor(usuarioDTO.getNome(), usuarioDTO.getSenha());
-            case "SECRETARIA" -> usuario = new Secretaria(usuarioDTO.getNome(), usuarioDTO.getSenha());
+        String tipo = usuarioDTO.getTipo().toUpperCase();
+        switch (tipo) {
+            case "ALUNO" -> usuario = new Aluno(usuarioDTO.getNome(), usuarioDTO.getSenha(), tipo);
+            case "PROFESSOR" -> usuario = new Professor(usuarioDTO.getNome(), usuarioDTO.getSenha(), tipo);
+            case "SECRETARIA" -> usuario = new Secretaria(usuarioDTO.getNome(), usuarioDTO.getSenha(), tipo);
             default -> throw new IllegalArgumentException("Tipo de usuário inválido: " + usuarioDTO.getTipo());
         };
         return usuario;

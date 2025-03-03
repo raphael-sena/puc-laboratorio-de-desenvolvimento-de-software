@@ -1,6 +1,7 @@
 package org.puclab.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,11 +22,11 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Professor extends Usuario {
 
-    @OneToMany(mappedBy = "professor", orphanRemoval = true)
+    @OneToMany(mappedBy = "professor", orphanRemoval = true, fetch = FetchType.EAGER)
     public Set<Disciplina> disciplinas;
 
-    public Professor(String nome, String senha) {
-        super(nome, senha);
+    public Professor(String nome, String senha, String tipo) {
+        super(nome, senha, tipo);
     }
 
     // TODO

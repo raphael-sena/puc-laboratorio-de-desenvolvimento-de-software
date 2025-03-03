@@ -19,11 +19,11 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Secretaria extends Usuario {
 
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "secretaria_id")
     public Set<Usuario> usuarios;
 
-    public Secretaria(String nome, String senha) {
-        super(nome, senha);
+    public Secretaria(String nome, String senha, String tipo) {
+        super(nome, senha, tipo);
     }
 }

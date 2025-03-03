@@ -1,6 +1,8 @@
 package org.puclab.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -20,10 +22,10 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Aluno extends Usuario {
 
-    @OneToMany(mappedBy = "aluno", orphanRemoval = true)
+    @OneToMany(mappedBy = "aluno", orphanRemoval = true, fetch = FetchType.EAGER)
     public Set<Matricula> matriculas;
 
-    public Aluno(String nome, String senha) {
-        super(nome, senha);
+    public Aluno(String nome, String senha, String tipo) {
+        super(nome, senha, tipo);
     }
 }

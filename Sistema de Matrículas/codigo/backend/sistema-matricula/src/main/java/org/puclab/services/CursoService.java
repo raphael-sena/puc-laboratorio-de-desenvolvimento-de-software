@@ -5,6 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import org.puclab.exceptions.ObjectNotFoundException;
 import org.puclab.models.Curriculo;
 import org.puclab.models.Curso;
+import org.puclab.models.Disciplina;
 import org.puclab.models.dtos.CurriculoDTO;
 import org.puclab.models.dtos.CursoDTO;
 
@@ -71,7 +72,7 @@ public class CursoService {
         curso.persist();
 
         curriculoDTO.setId(curriculoId);
-        curriculoDTO.setDisciplinas(curriculo.getDisciplinas());
+        curriculoDTO.setDisciplinas(curriculo.getDisciplinas().stream().map(Disciplina::getId).toList());
         curriculoDTO.setNome(curriculo.getNome());
 
         return curriculoDTO;
