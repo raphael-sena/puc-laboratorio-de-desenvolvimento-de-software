@@ -51,4 +51,26 @@ public class CurriculoController {
         curriculoService.deletarCurriculo(id);
         return Response.noContent().build();
     }
+
+    @POST
+    @Path("/{curriculoId}/disciplina/{disciplinaId}")
+    public Response associarDisciplinas(@PathParam("curriculoId") long curriculoId, @PathParam("disciplinaId") long disciplinaId) {
+        try {
+            curriculoService.associarDisciplinas(curriculoId, disciplinaId);
+            return Response.status(Response.Status.OK).build();
+        } catch (RuntimeException ex) {
+            return Response.status(Response.Status.FORBIDDEN).entity(ex.getMessage()).build();
+        }
+    }
+
+    @DELETE
+    @Path("/{curriculoId}/disciplina/{disciplinaId}")
+    public Response desassociarDisciplinas(@PathParam("curriculoId") long curriculoId, @PathParam("disciplinaId") long disciplinaId) {
+        try {
+            curriculoService.desassociarDisciplinas(curriculoId, disciplinaId);
+            return Response.noContent().build();
+        } catch (RuntimeException ex) {
+            return Response.status(Response.Status.FORBIDDEN).entity(ex.getMessage()).build();
+        }
+    }
 }

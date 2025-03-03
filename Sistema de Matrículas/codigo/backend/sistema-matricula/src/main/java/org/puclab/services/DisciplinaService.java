@@ -98,4 +98,44 @@ public class DisciplinaService {
 
         return disciplina;
     }
+
+    public Disciplina desassociarProfessor(long disciplinaId) {
+        Disciplina disciplina = Disciplina.findById(disciplinaId);
+        if (disciplina == null) {
+            throw new RuntimeException("Disciplina não encontrada");
+        }
+
+        disciplina.setProfessor(null);
+        disciplina.persist();
+
+        return disciplina;
+    }
+
+    public Object deletarDisciplina(long usuarioId, long disciplinaId) {
+        Usuario usuario = Usuario.findById(usuarioId);
+        if (usuario == null) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+
+        if (!(usuario instanceof Secretaria)) {
+            throw new RuntimeException("Apenas usuários do tipo secretaria podem deletar disciplinas.");
+        }
+
+        Disciplina disciplina = Disciplina.findById(disciplinaId);
+        if (disciplina == null) {
+            throw new RuntimeException("Disciplina não encontrada");
+        }
+
+        disciplina.delete();
+        return "Disciplina deletada com sucesso";
+    }
+
+    public DisciplinaDTO findById(long disciplinaId) {
+        Disciplina disciplina = Disciplina.findById(disciplinaId);
+        if (disciplina == null) {
+            throw new RuntimeException("Disciplina não encontrada");
+        }
+
+        return new DisciplinaDTO(disciplinaId, disciplina.getNome());
+    }
 }

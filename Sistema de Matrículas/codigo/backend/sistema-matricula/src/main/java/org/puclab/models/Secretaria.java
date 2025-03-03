@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,7 @@ public class Secretaria extends Usuario {
 
     @OneToMany(orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "secretaria_id")
-    public Set<Usuario> usuarios;
+    public Set<Usuario> usuarios = new HashSet<>();
 
     public Secretaria(String nome, String senha, String tipo) {
         super(nome, senha, tipo);

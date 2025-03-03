@@ -7,6 +7,7 @@ import org.puclab.models.Curso;
 import org.puclab.models.Disciplina;
 import org.puclab.models.dtos.CurriculoDTO;
 import org.puclab.models.dtos.CursoDTO;
+import org.puclab.models.dtos.DisciplinaDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +30,7 @@ public class CurriculoService {
                         () -> new ObjectNotFoundException("Currículo não encontrado!")
                 );
 
-        CurriculoDTO curriculoDTO = new CurriculoDTO();
-        curriculoDTO.setId(curriculo.getId());
-        curriculoDTO.setNome(curriculo.getNome());
-        curriculoDTO.setDisciplinas(curriculo.getDisciplinas()
-                .stream()
-                .map(Disciplina::getId)
-                .collect(Collectors.toList()));
-
-        return curriculoDTO;
+        return fromCurriculoDTO(curriculo);
     }
 
     public CurriculoDTO criarCurriculo(CurriculoDTO curriculoDTO) {
@@ -78,5 +71,65 @@ public class CurriculoService {
         curriculo.setNome(curriculoDTO.getNome());
         curriculo.persist();
         curriculoDTO.setId(curriculo.getId());
+    }
+
+    public CurriculoDTO associarDisciplinas(long curriculoId, long disciplinaId) {
+        Curriculo curriculo = Curriculo.findById(curriculoId);
+        Disciplina disciplina = Disciplina.findById(disciplinaId);
+
+        if (curriculo == null) {
+            throw new ObjectNotFoundException("Currículo não encontrado!");
+        }
+
+        if (disciplina == null) {
+            throw new ObjectNotFoundException("Disciplina não encontrada!");
+        }
+
+        if (curriculo.getDisciplinas().contains(disciplina)) {
+            throw new RuntimeException("Disciplina já associada ao currículo!");
+        }
+
+        curriculo.getDisciplinas().add(disciplina);
+        curriculo.persist();
+
+        return fromCurriculoDTO(curriculo);
+
+    }
+
+    private CurriculoDTO fromCurriculoDTO(Curriculo curriculo) {
+        CurriculoDTO curriculoDTO = new CurriculoDTO();
+        curriculoDTO.setId(curriculo.getId());
+        curriculoDTO.setNome(curriculo.getNome());
+        curriculoDTO.setDisciplinas(curriculo.getDisciplinas()
+                .stream()
+                .map(d -> {
+                    DisciplinaDTO disciplinaDTO = new DisciplinaDTO();
+                    disciplinaDTO.setId(d.getId());
+                    disciplinaDTO.setNome(d.getNome());
+                    return disciplinaDTO;
+                })
+                .collect(Collectors.toList()));
+
+        return curriculoDTO;
+    }
+
+    public void desassociarDisciplinas(long curriculoId, long disciplinaId) {
+        Curriculo curriculo = Curriculo.findById(curriculoId);
+        Disciplina disciplina = Disciplina.findById(disciplinaId);
+
+        if (curriculo == null) {
+            throw new ObjectNotFoundException("Currículo não encontrado!");
+        }
+
+        if (disciplina == null) {
+            throw new ObjectNotFoundException("Disciplina não encontrada!");
+        }
+
+        if (!curriculo.getDisciplinas().contains(disciplina)) {
+            throw new RuntimeException("Disciplina não associada ao currículo!");
+        }
+
+        curriculo.getDisciplinas().remove(disciplina);
+        curriculo.persist();
     }
 }
