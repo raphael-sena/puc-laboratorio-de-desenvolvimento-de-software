@@ -10,9 +10,11 @@ import org.puclab.models.Secretaria;
 import org.puclab.models.Usuario;
 import org.puclab.models.dtos.DisciplinaDTO;
 import org.puclab.models.enums.StatusDisciplina;
+import org.puclab.models.enums.TipoDisciplina;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class DisciplinaService {
@@ -27,6 +29,40 @@ public class DisciplinaService {
     public List<Disciplina> findAll() {
         return Disciplina.findAll().list();
     }
+
+
+    public List<DisciplinaDTO> findObrigatorias() {
+        // Filtra as disciplinas cujo tipo seja OBRIGATORIA
+        List<Disciplina> lista = Disciplina.list("tipo", TipoDisciplina.OBRIGATORIA);
+
+        // Converte cada Disciplina para DisciplinaDTO
+        return lista.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<DisciplinaDTO> findOptativas() {
+        // Filtra as disciplinas cujo tipo seja OPTATIVA
+        List<Disciplina> lista = Disciplina.list("tipo", TipoDisciplina.OPTATIVA);
+
+        return lista.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Converte uma entidade Disciplina em DisciplinaDTO.
+     */
+    private DisciplinaDTO toDTO(Disciplina disciplina) {
+        DisciplinaDTO dto = new DisciplinaDTO();
+        dto.setId(disciplina.getId());
+        dto.setNome(disciplina.getNome());
+
+        dto.setTipo(disciplina.getTipo().name());
+
+        return dto;
+    }
+
 
     @Transactional
     public Disciplina criarDisciplina(long usuarioId, DisciplinaDTO disciplinaDTO) {
@@ -46,6 +82,7 @@ public class DisciplinaService {
         Disciplina disciplina = new Disciplina();
         disciplina.setNome(disciplinaDTO.getNome());
         disciplina.setStatus(StatusDisciplina.ATIVA);
+        disciplina.setTipo(TipoDisciplina.valueOf(disciplinaDTO.getTipo()));
         disciplina.persist();
 
         return disciplina;
@@ -138,6 +175,6 @@ public class DisciplinaService {
             throw new RuntimeException("Disciplina não encontrada");
         }
 
-        return new DisciplinaDTO(disciplinaId, disciplina.getNome());
+        return new DisciplinaDTO(disciplinaId, disciplina.getNome(), disciplina.getTipo().name());
     }
 }

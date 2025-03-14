@@ -32,10 +32,10 @@ public class UsuarioService {
                         Set<DisciplinaDTO> disciplinaDTOS = new HashSet<>();
 
                         matricula.disciplinasObrigatorias
-                                .forEach(disciplina -> disciplinaDTOS.add(new DisciplinaDTO(disciplina.id, disciplina.nome)));
+                                .forEach(disciplina -> disciplinaDTOS.add(new DisciplinaDTO(disciplina.id, disciplina.nome, disciplina.tipo.name())));
 
                         matricula.disciplinasOptativas
-                                .forEach(disciplina -> disciplinaDTOS.add(new DisciplinaDTO(disciplina.id, disciplina.nome)));
+                                .forEach(disciplina -> disciplinaDTOS.add(new DisciplinaDTO(disciplina.id, disciplina.nome, disciplina.tipo.name())));
 
                         return new MatriculaDTO(matricula.id, matricula.dataMatricula, matricula.aluno.id, disciplinaDTOS, matricula.statusMatricula);
                     })
@@ -55,7 +55,7 @@ public class UsuarioService {
 
             List<DisciplinaDTO> disciplinaDTOS = ((Professor) usuario).getDisciplinas()
                     .stream()
-                    .map(disciplina -> new DisciplinaDTO(disciplina.id, disciplina.nome))
+                    .map(disciplina -> new DisciplinaDTO(disciplina.id, disciplina.nome, disciplina.tipo.name()))
                     .toList();
 
             professorResponseDTO.setId(id);

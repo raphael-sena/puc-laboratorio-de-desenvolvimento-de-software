@@ -20,7 +20,7 @@ export const gerarPeriodoMatricula = async (periodoMatricula: PeriodoMatricula):
 }
 
 export const createDisciplina = async (userId: number, disciplina: Disciplina): Promise<Disciplina> => {
-    const response = await api.post<Disciplina>(`/disciplinas/${userId}`, disciplina);
+    const response = await api.post<Disciplina>(`/disciplinas/secretaria/${userId}`, disciplina);
     return response.data;
 
 } 

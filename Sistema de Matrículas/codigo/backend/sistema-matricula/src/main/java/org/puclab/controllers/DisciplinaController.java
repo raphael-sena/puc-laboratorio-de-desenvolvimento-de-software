@@ -23,6 +23,18 @@ public class DisciplinaController {
     }
 
     @GET
+    @Path("/obrigatorias")
+    public Response findAllObrigatorias() {
+        return Response.ok(disciplinaService.findObrigatorias()).build();
+    }
+
+    @GET
+    @Path("/optativas")
+    public Response findAllOptativas() {
+        return Response.ok(disciplinaService.findOptativas()).build();
+    }
+
+    @GET
     @Path("/{disciplinaId}")
     public Response findById(@PathParam("disciplinaId") long disciplinaId) {
         return Response.ok().entity(disciplinaService.findById(disciplinaId)).build();

@@ -74,7 +74,7 @@ public class CursoService {
 
         curriculoDTO.setId(curriculoId);
         curriculoDTO.setDisciplinas(curriculo.getDisciplinas().stream()
-                .map(d -> new DisciplinaDTO(d.getId(), d.getNome()))
+                .map(d -> new DisciplinaDTO(d.getId(), d.getNome(), d.getTipo().name()))
                 .toList());
 
         curriculoDTO.setNome(curriculo.getNome());

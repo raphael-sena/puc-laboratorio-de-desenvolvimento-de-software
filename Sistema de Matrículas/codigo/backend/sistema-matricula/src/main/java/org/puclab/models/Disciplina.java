@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.*;
 import org.puclab.models.enums.StatusDisciplina;
+import org.puclab.models.enums.TipoDisciplina;
 
 @Entity
 @Table(name = "tb_disciplina")
@@ -20,12 +21,14 @@ public class Disciplina extends PanacheEntityBase {
     public String nome;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "disciplina_id")
+    @JoinColumn(name = "professor_id")
     public Professor professor;
 
     @Enumerated(EnumType.STRING)
     public StatusDisciplina status;
 
+    @Enumerated(EnumType.STRING)
+    public TipoDisciplina tipo;
     /**
      * Verifica se a disciplina pode continuar ativa ou se deve ser cancelada
      * (chamado no final do período de matrículas)
