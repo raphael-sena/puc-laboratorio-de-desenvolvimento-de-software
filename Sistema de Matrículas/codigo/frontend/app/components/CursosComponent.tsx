@@ -88,7 +88,7 @@ export default function CursosComponent() {
         Total Usuários: {usuarios}{" "}
       </div>
       <div className="col-span-2 row-span-8 col-start-2 row-start-1 p-4">
-        <h1 className="text-lg font-semibold">Disciplinas</h1>
+        <h1 className="text-lg font-semibold mb-2">Disciplinas</h1>
         <Disciplina />
       </div>
       <div className="col-span-2 row-span-8 col-start-4 row-start-1 p-4">

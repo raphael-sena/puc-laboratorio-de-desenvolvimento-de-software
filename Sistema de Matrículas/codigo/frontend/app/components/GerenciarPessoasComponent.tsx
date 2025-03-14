@@ -164,7 +164,7 @@ export default function GerenciarPessoasComponent() {
               <TableRow key={user.id}>
                 <TableCell className="font-medium">{user.id}</TableCell>
                 <TableCell>{user.nome}</TableCell>
-                <TableCell>{user.tipo}</TableCell>
+                <TableCell>{user.tipo.toUpperCase()}</TableCell>
                 <TableCell className="text-right justify-end flex gap-2">
                   <Button
                     className="hover:cursor-pointer"

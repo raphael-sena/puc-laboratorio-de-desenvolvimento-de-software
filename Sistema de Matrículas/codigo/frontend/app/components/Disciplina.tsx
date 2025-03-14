@@ -1,9 +1,22 @@
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,61 +28,53 @@ const formSchema = z.object({
   nome: z.string().min(1, {
     message: "Nome deve ter no mínimo 3 caractere.",
   }),
-  senha: z.string().min(4, {
-    message: "Senha deve ter no mínimo 4 caracteres.",
-  }),
-  tipo: z.string().min(4, {
-    message: "Tipo de usuário deve ser selecionado.",
-  }),
 });
 
 export default function Disciplina() {
-    const [errorMessage, setErrorMessage] = useState("");
-    const [secretariaId, setSecretariaId] = useState<number | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  // const [secretariaId, setSecretariaId] = useState<number | null>(null);
 
-      const router = useRouter();
-    
-      const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          nome: "",
-          senha: "",
-          tipo: "",
-        },
-      });
-    
-    async function onSubmit(values: z.infer<typeof formSchema>) {
-        setErrorMessage("");
-    
-        try {
-            const formData = {
-                nome: values.nome,
-                senha: values.senha,
-                tipo: values.tipo,
-            };
+  //   const router = useRouter();
 
-            const secretariaId = Number(localStorage.getItem("token"));
-            console.log("secretariaId:", secretariaId);
-    
-            const novoUsuario = await createDisciplina(secretariaId, formData);
-    
-            if (novoUsuario) {
-                alert("Usuário criado com sucesso!");
-                console.log("novo usuario:", novoUsuario);
-                form.reset();
-            } else {
-                setErrorMessage("Falha ao criar usuário.");
-            }
-        } catch (error) {
-            console.error("Erro ao tentar criar usuário:", error);
-            setErrorMessage("Erro ao conectar-se ao servidor.");
-        }
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      nome: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setErrorMessage("");
+
+    try {
+      const formData = {
+        nome: values.nome,
+      };
+
+      const secretariaId = Number(localStorage.getItem("token"));
+      console.log("secretariaId:", secretariaId);
+
+      const novaDisciplina = await createDisciplina(secretariaId, formData);
+
+      console.log("nova disciplina:", novaDisciplina);
+
+      if (novaDisciplina) {
+        alert("Disciplina criada com sucesso!");
+        console.log("nova disciplina:", novaDisciplina);
+        form.reset();
+      } else {
+        setErrorMessage("Falha ao criar disciplina.");
+      }
+    } catch (error) {
+      console.error("Erro ao tentar criar disciplina:", error);
+      setErrorMessage("Erro ao conectar-se ao servidor.");
     }
+  }
 
-    
-    return (
-        <div>
-            <Form {...form}>
+  return (
+    <div className="border border-black p-2 rounded-sm">
+      <h2 className="w-full text-center">Criar Disciplina</h2>
+      <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full text-center"
@@ -87,49 +92,11 @@ export default function Disciplina() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="senha"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Senha</FormLabel>
-                <FormControl>
-                  <Input placeholder="Senha" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="tipo"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tipo</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione um tipo de usuário" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="SECRETARIA">SECRETARIA</SelectItem>
-                    <SelectItem value="ALUNO">ALUNO</SelectItem>
-                    <SelectItem value="PROFESSOR">PROFESSOR</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <Button className="hover:cursor-pointer w-full" type="submit">
             Enviar
           </Button>
         </form>
       </Form>
-        </div>
-    );
+    </div>
+  );
 }
