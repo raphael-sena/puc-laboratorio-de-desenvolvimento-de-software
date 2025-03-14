@@ -8,6 +8,7 @@ import org.puclab.models.Curso;
 import org.puclab.models.Disciplina;
 import org.puclab.models.dtos.CurriculoDTO;
 import org.puclab.models.dtos.CursoDTO;
+import org.puclab.models.dtos.DisciplinaDTO;
 
 import java.util.List;
 import java.util.Set;
@@ -72,7 +73,10 @@ public class CursoService {
         curso.persist();
 
         curriculoDTO.setId(curriculoId);
-        curriculoDTO.setDisciplinas(curriculo.getDisciplinas().stream().map(Disciplina::getId).toList());
+        curriculoDTO.setDisciplinas(curriculo.getDisciplinas().stream()
+                .map(d -> new DisciplinaDTO(d.getId(), d.getNome()))
+                .toList());
+
         curriculoDTO.setNome(curriculo.getNome());
 
         return curriculoDTO;

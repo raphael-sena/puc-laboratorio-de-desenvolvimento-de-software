@@ -76,7 +76,6 @@ public class UsuarioService {
     public List<Usuario> searchUsuarios(String query, int page, int pageSize) {
         PanacheQuery<Usuario> usuarioQuery;
 
-        // Verifica se a query é um número válido para buscar pelo ID exato
         if (query.matches("\\d+")) {
             usuarioQuery = Usuario.find("id = ?1 OR LOWER(nome) LIKE ?2",
                     Integer.parseInt(query), "%" + query.toLowerCase() + "%");
@@ -105,7 +104,20 @@ public class UsuarioService {
 
     public String getTipoUsuario(long id) {
         Usuario usuario = Usuario.findById(id);
-        return usuario.getClass().getSimpleName().toUpperCase();
+        String tipo;
+
+        if (usuario.tipo == "USUARIO") {
+            throw new RuntimeException("Houve um erro de relacionamento entre entidades ao tentar identificar o tipo do usuário.");
+        } if (usuario.tipo.equalsIgnoreCase("ALUNO")) {
+            tipo = "ALUNO";
+        } else if (usuario.tipo.equalsIgnoreCase("PROFESSOR")) {
+            tipo = "PROFESSOR";
+        } else if (usuario.tipo.equalsIgnoreCase("SECRETARIA")) {
+            tipo = "SECRETARIA";
+        } else {
+            throw new RuntimeException("Houve um erro ao tentar identificar o tipo do usuário.");
+        }
+        return tipo;
     }
 
     public UsuarioDTO atualizarUsuario(Long id, UsuarioDTO usuarioDTO) {
@@ -116,7 +128,6 @@ public class UsuarioService {
         usuario.persist();
         usuarioDTO.setId(usuario.id);
         return usuarioDTO;
-
     }
 
     public void deletarUsuario(Long id) {

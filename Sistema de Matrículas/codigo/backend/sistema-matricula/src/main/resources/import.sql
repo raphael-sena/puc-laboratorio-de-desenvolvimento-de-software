@@ -5,9 +5,9 @@
 -- insert into myentity (id, field) values(3, 'field-3');
 -- alter sequence myentity_seq restart with 4;
 
-INSERT INTO usuario (tipo, nome, senha) VALUES ('SECRETARIA', 'ICEI', '123456');
-INSERT INTO usuario (tipo, nome, senha) VALUES ('ALUNO', 'Raphael Sena', '123456');
-INSERT INTO usuario (tipo, nome, senha) VALUES ('PROFESSOR', 'Lesandro Ponciano', '123456');
+INSERT INTO usuario (tipo, nome, senha) VALUES ('secretaria', 'ICEI', '123456');
+INSERT INTO usuario (tipo, nome, senha) VALUES ('aluno', 'Raphael Sena', '123456');
+INSERT INTO usuario (tipo, nome, senha) VALUES ('professor', 'Lesandro Ponciano', '123456');
 
 INSERT INTO tb_disciplina (nome, status) VALUES ('Banco de Dados', 'ATIVA');
 INSERT INTO tb_disciplina (nome, status) VALUES ('Teoria dos Grafos', 'ATIVA');

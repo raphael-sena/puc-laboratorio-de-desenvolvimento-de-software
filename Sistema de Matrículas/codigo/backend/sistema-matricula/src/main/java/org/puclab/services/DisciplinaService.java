@@ -31,6 +31,8 @@ public class DisciplinaService {
     @Transactional
     public Disciplina criarDisciplina(long usuarioId, DisciplinaDTO disciplinaDTO) {
 
+        System.out.println("Criando disciplina");
+
         Usuario usuario = Usuario.findById(usuarioId);
         if (usuario == null) {
             throw new RuntimeException("Usuário não encontrado");
