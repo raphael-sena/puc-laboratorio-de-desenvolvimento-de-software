@@ -1,14 +1,10 @@
 package org.puclab.services;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import org.puclab.models.PeriodoMatricula;
-import org.puclab.models.Usuario;
-import org.puclab.models.dtos.UsuarioDTO;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @ApplicationScoped
 public class SecretariaService implements PeriodoMatricula {

@@ -19,15 +19,21 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class DisciplinaService {
 
-
     private final SecretariaService secretariaService;
 
     public DisciplinaService(SecretariaService secretariaService) {
         this.secretariaService = secretariaService;
     }
 
-    public List<Disciplina> findAll() {
-        return Disciplina.findAll().list();
+    public List<DisciplinaDTO> findAll() {
+        return Disciplina.findAll().list().stream().map(d -> {
+            DisciplinaDTO dto = new DisciplinaDTO();
+            Disciplina disciplina = (Disciplina) d;
+            dto.setId(disciplina.getId());
+            dto.setNome(disciplina.getNome());
+            dto.setTipo(disciplina.getTipo().name());
+            return dto;
+        }).collect(Collectors.toList());
     }
 
 
@@ -130,6 +136,10 @@ public class DisciplinaService {
         Disciplina disciplina = Disciplina.findById(disciplinaId);
         if (disciplina == null) {
             throw new RuntimeException("Disciplina não encontrada");
+        }
+
+        if (disciplina.getProfessor() != null) {
+            throw new RuntimeException("Disciplina já possui um professor associado");
         }
 
         disciplina.setProfessor(usuario);
