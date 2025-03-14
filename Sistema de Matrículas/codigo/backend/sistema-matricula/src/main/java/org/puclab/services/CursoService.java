@@ -12,14 +12,29 @@ import org.puclab.models.dtos.DisciplinaDTO;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class CursoService {
 
-    public List<PanacheEntityBase> findAll(Integer page, Integer pageSize) {
-        return Curso.findAll()
+    public List<CursoDTO> findAll(Integer page, Integer pageSize) {
+        List<Curso> cursos = Curso.findAll()
                 .page(page, pageSize)
                 .list();
+
+        // Converter cada Curso em CursoDTO
+        return cursos.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    private CursoDTO toDTO(Curso entity) {
+        // Ajustar conforme seus campos
+        return new CursoDTO(
+                entity.getId(),
+                entity.getNome(),
+                entity.getCreditos()
+        );
     }
 
 

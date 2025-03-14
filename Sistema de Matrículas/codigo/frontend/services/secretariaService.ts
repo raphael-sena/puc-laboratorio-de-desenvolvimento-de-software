@@ -24,3 +24,28 @@ export const createDisciplina = async (userId: number, disciplina: Disciplina): 
     return response.data;
 
 } 
+
+
+export interface Curso {
+    id: number;
+    nome: string;
+    creditos: number;
+  }
+
+  export interface CursoCreate {
+    nome: string;
+    creditos: number;
+    }
+  
+  /**
+   * Busca a lista de cursos com paginação (ou não).
+   */
+  export async function getCursos(page = 0, pageSize = 10): Promise<Curso[]> {
+    const response = await api.get<Curso[]>(`/curso?page=${page}&pageSize=${pageSize}`);
+    return response.data;
+  }
+
+  export async function createCurso(curso: CursoCreate): Promise<Curso> {
+    const response = await api.post<Curso>("/curso", curso);
+    return response.data;
+  }
