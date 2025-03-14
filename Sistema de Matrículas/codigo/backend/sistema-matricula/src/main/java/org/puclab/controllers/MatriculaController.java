@@ -83,7 +83,6 @@ public class MatriculaController {
             @PathParam("disciplinaId") Long disciplinaId
     ) {
         try {
-            // Chama o novo método do service
             Matricula matricula = matriculaService.desmatricularAlunoEmDisciplina(matriculaId, disciplinaId);
 
             // Monta um JSON de resposta
