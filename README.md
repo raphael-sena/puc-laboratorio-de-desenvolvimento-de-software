@@ -48,7 +48,14 @@ Toda a documentação do projeto está disponível no diretório [/docs](/docs).
 O código fonte da aplicação está disponível no caminho [/codigo](/codigo), e é possível encontrar os diretórios do backend e do frontend.
 
 - O backend da aplicação está em [/codigo/backend/sistema-matricula/](/codigo/backend/sistema-matricula/)
-- O backend da aplicação está em [/codigo/frontend](/codigo/frontend/)
+
+ <div align="center">
+     <img src="https://github.com/raphael-sena/sistema-de-matriculas/blob/main/docs/assets/backend.gif?raw=true"/>
+ </div>
+ <br/> 
+ <br/>
+
+- O frontend da aplicação está em [/codigo/frontend](/codigo/frontend/)
   
 <!-- ## 🚀 Configuração do Ambiente
 
