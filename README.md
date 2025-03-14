@@ -30,16 +30,26 @@ O Sistema de Matrículas é um software desenvolvido para alunos, professores e 
 
 ## 📑 Documentação
 
-Toda a documentação do projeto está disponível no diretório [/docs](https://github.com/raphael-sena/puc-laboratorio-de-desenvolvimento-de-software/tree/sistema-de-matriculas/Sistema%20de%20Matr%C3%ADculas/docs). Lá é possível encontrar todos os diagramas desenvolvidos para a produção do software e concepção, bem como a premissa e enunciado do problema.
+Toda a documentação do projeto está disponível no diretório [/docs](/docs). Lá é possível encontrar todos os diagramas desenvolvidos para a produção do software e concepção, bem como a premissa e enunciado do problema.
 
 ### Diagrama de Caso de Uso
 
-- É possível encontrar o diagrama de caso de uso em [/docs/diagramas/UC.png](https://github.com/raphael-sena/puc-laboratorio-de-desenvolvimento-de-software/blob/sistema-de-matriculas/Sistema%20de%20Matr%C3%ADculas/docs/diagramas/UC.png)
+- É possível encontrar o diagrama de caso de uso em [/docs/diagramas/UC.png](/docs/diagramas/UC.png)
 
 ### Histórias de Usuário
 
-- As histórias de usuário estão disponíveis em [/docs/historias-de-usuario.md](https://github.com/raphael-sena/puc-laboratorio-de-desenvolvimento-de-software/blob/sistema-de-matriculas/Sistema%20de%20Matr%C3%ADculas/docs/historias-de-usuario.md)
+- As histórias de usuário estão disponíveis em [/docs/historias-de-usuario.md](/docs/historias-de-usuario.md)
 
+### Diagrama de Classes
+
+- O diagrama de classes está disponível em [/docs/diagrmas/CD.png](/docs/diagramas/CD.png)
+
+## 📀 Código
+O código fonte da aplicação está disponível no caminho [/codigo](/codigo), e é possível encontrar os diretórios do backend e do frontend.
+
+- O backend da aplicação está em [/codigo/backend/sistema-matricula/](/codigo/backend/sistema-matricula/)
+- O backend da aplicação está em [/codigo/frontend](/codigo/frontend/)
+  
 <!-- ## 🚀 Configuração do Ambiente
 
 ### Pré-requisitos
@@ -51,9 +61,10 @@ Garanta que você tenha instalado em sua máquina as seguintes ferramentas de de
 
 ## 🛠️ Tecnologias Utilizadas
 
-<!-- * **Desenvolvimento**: Java, Swing, H2 -->
-<!-- * **Framework**: Spring Boot -->
-<!-- * **Ferramentas**: Inno Setup, Launch4j, Postman -->
-<!-- * **IDE**: IntelliJ -->
+- **Desenvolvimento Backend**: Java, H2 Database, Postgresql
+- **Desenvolvimento Frontend**: Typescript, TailwindCSS
+- **Framework**: Quarkus, React, Next.js
+- **Arquitetura**: MVC
+- **Ferramentas**: Intellij, Postman, Visual Studio Code
 - **Diagramas**: Astah UML
 - **Controle de Versão**: Git
