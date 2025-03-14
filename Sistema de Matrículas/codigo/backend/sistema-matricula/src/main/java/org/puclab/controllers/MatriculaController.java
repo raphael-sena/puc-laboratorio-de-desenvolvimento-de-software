@@ -6,6 +6,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.puclab.exceptions.BusinessException;
+import org.puclab.models.Matricula;
 import org.puclab.models.dtos.MatriculaRequestDTO;
 import org.puclab.services.MatriculaService;
 
@@ -75,21 +76,27 @@ public class MatriculaController {
     }
 
     @DELETE
-    @Path("/{alunoId}/disciplinas")
+    @Path("/{matriculaId}/disciplina/{disciplinaId}")
     @Transactional
-    public Response desmatricularAluno(@PathParam("alunoId") Long alunoId, List<Long> disciplinaIds) {
+    public Response desmatricularAluno(
+            @PathParam("matriculaId") Long matriculaId,
+            @PathParam("disciplinaId") Long disciplinaId
+    ) {
         try {
-            var matricula = matriculaService.desmatricularAlunoEmDisciplinas(alunoId, disciplinaIds);
+            // Chama o novo método do service
+            Matricula matricula = matriculaService.desmatricularAlunoEmDisciplina(matriculaId, disciplinaId);
 
-            return Response.ok()
-                    .entity(Map.of(
+            // Monta um JSON de resposta
+            return Response.ok(
+                    Map.of(
                             "id", matricula.getId(),
                             "status", matricula.getStatusMatricula(),
                             "quantidadeObrigatorias", matricula.getDisciplinasObrigatorias().size(),
                             "quantidadeOptativas", matricula.getDisciplinasOptativas().size(),
-                            "mensagem", "Disciplinas removidas com sucesso"
-                    ))
-                    .build();
+                            "mensagem", "Disciplina removida com sucesso"
+                    )
+            ).build();
+
         } catch (BusinessException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of("erro", e.getMessage()))
@@ -101,4 +108,5 @@ public class MatriculaController {
                     .build();
         }
     }
+
 }

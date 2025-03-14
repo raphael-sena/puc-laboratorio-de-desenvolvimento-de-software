@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.puclab.models.Usuario;
 
 @RegisterForReflection
 @AllArgsConstructor
@@ -20,8 +21,11 @@ public class UsuarioDTO {
     public String tipo;
 
     public UsuarioDTO(PanacheEntityBase usuario) {
-        this.nome = usuario.getClass().getSimpleName();
-        this.senha = usuario.getClass().getSimpleName();
-        this.tipo = usuario.getClass().getSimpleName();
+        Usuario u = (Usuario) usuario;
+        this.id = u.id;
+        this.nome = u.nome;
+        this.senha = u.senha;
+        this.tipo = u.tipo;
     }
+
 }

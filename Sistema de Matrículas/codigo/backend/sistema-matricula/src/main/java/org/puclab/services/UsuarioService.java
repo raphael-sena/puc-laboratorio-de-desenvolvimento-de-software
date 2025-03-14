@@ -67,11 +67,21 @@ public class UsuarioService {
         }
     }
 
-    public List<PanacheEntityBase> findAll(Integer page, Integer pageSize) {
-        return Usuario.findAll()
+
+
+    public List<UsuarioDTO> findAll(Integer page, Integer pageSize) {
+        // 1) Buscar entidades do tipo Usuario
+        List<Usuario> usuarios = Usuario.findAll()
                 .page(page, pageSize)
                 .list();
+
+        // 2) Mapear cada Usuario para UsuarioDTO
+        // Supondo que você tenha um construtor em UsuarioDTO que aceite Usuario:
+        return usuarios.stream()
+                .map(usuario -> new UsuarioDTO(usuario))
+                .collect(Collectors.toList());
     }
+
 
     public List<Usuario> searchUsuarios(String query, int page, int pageSize) {
         PanacheQuery<Usuario> usuarioQuery;
